@@ -1,22 +1,238 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CIA - Center Intelligence Agency</title>
-    <meta name="description" content="Center Intelligence Agency - Em meio ao caos, nós somos a ordem invisível. Junte-se à CIA no Discord." />
-    <meta name="author" content="CIA" />
+    <meta name="description" content="Center Intelligence Agency - Em meio ao caos, nós somos a ordem invisível. Junte-se à nossa organização de elite.">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CIA - Center Intelligence Agency">
+    <meta property="og:description" content="Em meio ao caos, nós somos a ordem invisível.">
+    <meta property="og:image" content="cia-logo.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --background: 240 10% 4%;
+            --foreground: 0 0% 98%;
+            --card: 240 10% 6%;
+            --primary: 0 0% 96%;
+            --primary-foreground: 240 10% 4%;
+            --secondary: 240 10% 10%;
+            --muted: 240 10% 15%;
+            --muted-foreground: 240 5% 65%;
+            --border: 240 10% 15%;
+        }
 
-    <meta property="og:title" content="CIA - Center Intelligence Agency" />
-    <meta property="og:description" content="Em meio ao caos, nós somos a ordem invisível. Junte-se à organização que opera nas sombras." />
-    <meta property="og:type" content="website" />
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .font-display, h1, h2, h3 { font-family: 'Cinzel', serif; }
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@CIA" />
-  </head>
+        @keyframes fade-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slide-up { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fade-in 0.8s ease-out forwards; }
+        .animate-fade-in-delay { animation: fade-in 0.8s ease-out 0.2s forwards; opacity: 0; }
+        .animate-slide-up { animation: slide-up 0.8s ease-out 0.4s forwards; opacity: 0; }
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            padding: 1rem 2rem; font-size: 1rem; font-weight: 500; border-radius: 0.375rem;
+            cursor: pointer; transition: all 0.2s ease; text-decoration: none; min-width: 200px;
+        }
+        .btn-primary { background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border: none; }
+        .btn-primary:hover { background-color: hsl(0 0% 91%); transform: translateY(-2px); }
+        .btn-outline { background-color: transparent; color: hsl(var(--foreground)); border: 1px solid hsl(var(--border)); }
+        .btn-outline:hover { background-color: hsl(var(--secondary)); transform: translateY(-2px); }
+
+        .hero {
+            position: relative; min-height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; padding: 5rem 1.5rem;
+        }
+        .hero-bg { position: absolute; inset: 0; background: linear-gradient(to bottom, hsl(var(--background)), hsl(var(--background)), hsl(var(--secondary) / 0.2)); }
+        .hero-logo { position: relative; z-index: 10; margin-bottom: 2rem; }
+        .hero-logo img { width: 10rem; height: 10rem; object-fit: contain; }
+        @media (min-width: 768px) { .hero-logo img { width: 14rem; height: 14rem; } }
+        .hero-title { position: relative; z-index: 10; text-align: center; margin-bottom: 2rem; }
+        .hero-title h1 { font-size: 2.25rem; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        @media (min-width: 768px) { .hero-title h1 { font-size: 3.75rem; } }
+        @media (min-width: 1024px) { .hero-title h1 { font-size: 4.5rem; } }
+        .hero-divider { width: 8rem; height: 1px; background: linear-gradient(to right, transparent, hsl(var(--muted-foreground)), transparent); margin: 0 auto; }
+        .hero-quote { position: relative; z-index: 10; color: hsl(var(--muted-foreground)); font-size: 1.125rem; font-style: italic; text-align: center; max-width: 42rem; margin-bottom: 3rem; }
+        @media (min-width: 768px) { .hero-quote { font-size: 1.25rem; } }
+        .hero-buttons { position: relative; z-index: 10; display: flex; flex-direction: column; gap: 1rem; }
+        @media (min-width: 640px) { .hero-buttons { flex-direction: row; } }
+
+        .purpose { position: relative; padding: 6rem 1.5rem; border-top: 1px solid hsl(var(--border)); }
+        .purpose-container { max-width: 56rem; margin: 0 auto; }
+        .purpose-header { text-align: center; margin-bottom: 4rem; }
+        .purpose-header span { color: hsl(var(--muted-foreground)); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.3em; margin-bottom: 1rem; display: block; }
+        .purpose-header h2 { font-size: 1.875rem; font-weight: 700; }
+        @media (min-width: 768px) { .purpose-header h2 { font-size: 2.25rem; } }
+        @media (min-width: 1024px) { .purpose-header h2 { font-size: 3rem; } }
+        .purpose-content { color: hsl(var(--muted-foreground)); line-height: 1.8; }
+        .purpose-content p { margin-bottom: 2rem; }
+        .purpose-content .lead { font-size: 1.125rem; text-align: center; font-weight: 500; color: hsl(var(--foreground) / 0.9); }
+        @media (min-width: 768px) { .purpose-content .lead { font-size: 1.25rem; } }
+        .purpose-statements { padding: 2rem 0; border-top: 1px solid hsl(var(--border) / 0.5); border-bottom: 1px solid hsl(var(--border) / 0.5); margin: 2rem 0; }
+        .purpose-statements p { color: hsl(var(--foreground)); font-weight: 500; margin-bottom: 0.75rem; }
+        .purpose-statements p:last-child { margin-bottom: 0; }
+        .purpose-grid { display: grid; gap: 1rem; padding: 1.5rem 0; margin: 2rem 0; }
+        @media (min-width: 768px) { .purpose-grid { grid-template-columns: repeat(3, 1fr); } }
+        .purpose-grid-item { text-align: center; padding: 1rem; background-color: hsl(var(--card) / 0.5); border: 1px solid hsl(var(--border)); border-radius: 0.25rem; }
+        .purpose-grid-item p { color: hsl(var(--foreground)); font-weight: 600; margin-bottom: 0; }
+        .purpose-border-list { padding: 1.5rem 0 1.5rem 1.5rem; border-left: 2px solid hsl(var(--muted)); margin: 2rem 0; }
+        .purpose-border-list p { color: hsl(var(--foreground)); margin-bottom: 1rem; }
+        .purpose-border-list p:last-child { margin-bottom: 0; }
+        .purpose-center-statements { text-align: center; padding: 2rem 0; }
+        .purpose-center-statements p { color: hsl(var(--foreground)); font-weight: 500; margin-bottom: 0.5rem; }
+        .purpose-italic { text-align: center; font-style: italic; }
+        .purpose-cta { text-align: center; padding-top: 2rem; }
+        .purpose-cta p { font-size: 1.5rem; font-weight: 700; color: hsl(var(--foreground)); margin-bottom: 0; }
+        @media (min-width: 768px) { .purpose-cta p { font-size: 1.875rem; } }
+
+        .cta { padding: 6rem 1.5rem; border-top: 1px solid hsl(var(--border)); }
+        .cta-container { max-width: 48rem; margin: 0 auto; text-align: center; }
+        .cta-logo { width: 6rem; height: 6rem; object-fit: contain; margin: 0 auto 2rem; opacity: 0.6; }
+        .cta h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1.5rem; }
+        @media (min-width: 768px) { .cta h2 { font-size: 1.875rem; } }
+        .cta p { color: hsl(var(--muted-foreground)); margin-bottom: 2rem; max-width: 32rem; margin-left: auto; margin-right: auto; }
+        .cta-buttons { display: flex; flex-direction: column; gap: 1rem; justify-content: center; }
+        @media (min-width: 640px) { .cta-buttons { flex-direction: row; } }
+
+        footer { border-top: 1px solid hsl(var(--border)); padding: 2rem 1.5rem; }
+        .footer-container { max-width: 72rem; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 1rem; }
+        @media (min-width: 768px) { .footer-container { flex-direction: row; } }
+        .footer-logo { font-size: 1.125rem; font-weight: 600; }
+        .footer-copyright { color: hsl(var(--muted-foreground)); font-size: 0.875rem; }
+    /* Forçar o "Entrar no Servidor" a ser branco */
+#discord-link,
+#discord-link-2 {
+  background-color: hsl(0 0% 100%) !important;
+  color: hsl(240 10% 4%) !important;
+  border: none !important;
+}
+
+#discord-link:hover,
+#discord-link-2:hover {
+  background-color: hsl(0 0% 96%) !important;
+  color: hsl(240 10% 4%) !important;
+}
+    
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-logo animate-fade-in">
+            <img src="cia-logo.png" alt="CIA Logo">
+        </div>
+        <div class="hero-title animate-fade-in-delay">
+            <h1>CENTER INTELLIGENCE AGENCY</h1>
+            <div class="hero-divider"></div>
+        </div>
+        <p class="hero-quote animate-slide-up">"Em meio ao caos, nós somos a ordem invisível."</p>
+        <div class="hero-buttons animate-slide-up">
+            <a href="#" class="btn btn-primary" id="discord-link" target="_blank" rel="noopener noreferrer">
+                <i data-lucide="external-link" style="width: 16px; height: 16px;"></i>
+                Entrar no Servidor
+            </a>
+            <a href="#" class="btn btn-outline" id="bot-link" target="_blank" rel="noopener noreferrer">
+                <i data-lucide="user-plus" style="width: 16px; height: 16px;"></i>
+                Adicionar Bot
+            </a>
+        </div>
+    </section>
+
+    <section class="purpose">
+        <div class="purpose-container">
+            <div class="purpose-header">
+                <span>🎯 Propósito Oficial</span>
+                <h2 class="font-display">CIA</h2>
+            </div>
+            <div class="purpose-content">
+                <p class="lead">A Center Intelligence Agency nasceu para atuar onde a linha entre civilização e colapso se torna tênue.</p>
+                <p>Em um mundo fragmentado por conflitos silenciosos, rivalidades políticas, organizações clandestinas e ameaças que se expandem na escuridão, a CIA existe para garantir que o mundo continue em pé — mesmo quando tudo ao redor parece prestes a ruir.</p>
+                <div class="purpose-statements">
+                    <p>Nós operamos antes que a crise comece.</p>
+                    <p>Nós agimos onde ninguém mais consegue.</p>
+                    <p>Nós enxergamos o que outros ignoram.</p>
+                </div>
+                <p>Enquanto nações discutem, governos hesitam e outras organizações lutam por poder, a CIA se move de forma precisa e silenciosa:</p>
+                <div class="purpose-grid">
+                    <div class="purpose-grid-item"><p>Sempre um passo à frente.</p></div>
+                    <div class="purpose-grid-item"><p>Sempre onde é necessário.</p></div>
+                    <div class="purpose-grid-item"><p>Sempre no momento exato.</p></div>
+                </div>
+                <p>Nosso propósito é preservar o equilíbrio global, neutralizar ameaças emergentes e responder ao caos com disciplina, estratégia e precisão absoluta.</p>
+                <p>Não buscamos reconhecimento, glória ou aplausos — buscamos resultados. O mundo pode nunca conhecer os nomes de nossos agentes, mas sentirá as consequências de nossas vitórias.</p>
+                <p>Mesmo em meio à desordem, à guerra silenciosa e à ascensão de outros grupos, a CIA mantém seu compromisso:</p>
+                <div class="purpose-border-list">
+                    <p>Ser a primeira linha de defesa que ninguém vê.</p>
+                    <p>Ser a voz que guia no meio do caos.</p>
+                    <p>Ser a força que age quando o impossível se torna necessário.</p>
+                </div>
+                <div class="purpose-center-statements">
+                    <p>Nós não competimos.</p>
+                    <p>Nós não tememos.</p>
+                    <p>Nós não falhamos.</p>
+                </div>
+                <p class="purpose-italic">Enquanto outras organizações correm atrás da crise, a CIA já está lá — observando, calculando e executando.</p>
+                <div class="purpose-cta"><p class="font-display">Avante CIA!</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="cta-container">
+            <img src="cia-logo.png" alt="CIA Logo" class="cta-logo">
+            <h2 class="font-display">Junte-se à CIA</h2>
+            <p>Entre para uma organização que opera nas sombras para garantir a ordem no caos.</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary" id="discord-link-2" target="_blank" rel="noopener noreferrer">
+                    <i data-lucide="external-link" style="width: 16px; height: 16px;"></i>
+                    Servidor Discord
+                </a>
+                <a href="#" class="btn btn-outline" id="bot-link-2" target="_blank" rel="noopener noreferrer">
+                    <i data-lucide="user-plus" style="width: 16px; height: 16px;"></i>
+                    Convidar Bot
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-logo font-display">CIA</div>
+            <p class="footer-copyright">© 2024 Center Intelligence Agency. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        const CIA_CONFIG = {
+            DISCORD_SERVER_LINK: "https://discord.gg/ac2xz2tv",
+            BOT_OAUTH_LINK: "https://discord.com/oauth2/authorize?client_id=SEU-CLIENT-ID"
+        };
+        lucide.createIcons();
+        document.getElementById('discord-link').href = CIA_CONFIG.DISCORD_SERVER_LINK;
+        document.getElementById('discord-link-2').href = CIA_CONFIG.DISCORD_SERVER_LINK;
+        document.getElementById('bot-link').href = CIA_CONFIG.BOT_OAUTH_LINK;
+        document.getElementById('bot-link-2').href = CIA_CONFIG.BOT_OAUTH_LINK;
+    </script>
+</body>
 </html>
